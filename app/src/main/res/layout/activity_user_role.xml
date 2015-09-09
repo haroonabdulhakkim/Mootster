@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ha294221.mootster.UserRoleActivity"
+    android:background="@color/bg_user_role">
+
+
+    <Button
+        android:id="@+id/mcaAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mca_admin"
+        android:drawableLeft="@mipmap/admin_icon"
+        android:background="@drawable/button_selector"
+        android:layout_marginTop="110dp"
+        android:padding="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onButtonClick"
+        android:singleLine="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="OR"
+        android:id="@+id/textView"
+        android:layout_below="@+id/mcaAdmin"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        android:layout_margin="20dp" />
+
+    <Button
+        android:id="@+id/student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/student"
+        android:drawableLeft="@mipmap/student_icon"
+        android:layout_below="@+id/textView"
+        android:background="@drawable/button_selector"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignRight="@+id/mcaAdmin"
+        android:layout_alignEnd="@+id/mcaAdmin"
+        android:layout_alignLeft="@+id/mcaAdmin"
+        android:layout_alignStart="@+id/mcaAdmin"
+        android:onClick="onButtonClick"
+        android:singleLine="true"
+        android:ellipsize="middle" />
+
+
+</RelativeLayout>
