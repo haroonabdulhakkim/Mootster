@@ -1,0 +1,166 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_floating_material_light"
+    android:layout_marginTop="?actionBarSize"
+    >
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/mootPageTitle"
+        android:id="@+id/createMootTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/mootTypeDropdown"
+        android:popupBackground="#FFFF99"
+        android:layout_below="@+id/createMootTitle"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateOfMoot"
+        android:inputType="none"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_below="@+id/mootTypeDropdown"
+        android:hint="@string/hint_moot_date"
+        android:layout_marginRight="10dp"
+         />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calDateOfMoot"
+        android:src="@mipmap/ic_calendar"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/hint_moot_date"
+        android:layout_alignTop="@id/dateOfMoot"
+        android:layout_alignRight="@id/dateOfMoot"
+        android:layout_alignEnd="@id/dateOfMoot"
+        android:layout_alignBottom="@id/dateOfMoot"
+         />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateOfMootReg"
+        android:inputType="none"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:hint="@string/hint_moot_reg_date"
+        android:layout_below="@id/dateOfMoot"
+        android:layout_alignLeft="@id/dateOfMoot"
+        android:layout_alignStart="@id/dateOfMoot"
+         />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calDateOfMootReg"
+        android:src="@mipmap/ic_calendar"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/hint_moot_reg_date"
+        android:layout_alignTop="@id/dateOfMootReg"
+        android:layout_alignBottom="@id/dateOfMootReg"
+        android:layout_alignRight="@id/dateOfMoot"
+        android:layout_alignEnd="@id/dateOfMoot" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mootCourtName"
+        android:layout_below="@+id/dateOfMootReg"
+        android:layout_marginTop="10dp"
+        android:layout_centerVertical="true"
+        android:hint="@string/hint_moot_court_name"
+        android:layout_alignLeft="@id/dateOfMootReg"
+        android:layout_alignStart="@id/dateOfMootReg"
+        android:layout_alignRight="@id/dateOfMootReg"
+        android:layout_alignEnd="@id/dateOfMootReg" />
+
+    <MultiAutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_body_of_law"
+        android:id="@+id/bodyOfLawTagMultiAutoComplete"
+        android:layout_below="@+id/mootCourtName"
+        android:layout_alignLeft="@id/mootCourtName"
+        android:layout_alignStart="@id/mootCourtName"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/upload_rules"
+        android:layout_below="@id/bodyOfLawTagMultiAutoComplete"
+        android:id="@+id/uploadRulesTxt"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:layout_centerHorizontal="true" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/upload_moot_pblm"
+        android:layout_below="@id/uploadRulesTxt"
+        android:id="@+id/uploadMootProblem"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:layout_alignLeft="@id/uploadRulesTxt"
+        android:layout_alignStart="@id/uploadRulesTxt" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_moot"
+        android:background="@color/btn_login"
+        android:id="@+id/createMootBtn"
+        android:padding="10dp"
+        android:layout_marginTop="30dip"
+        android:textColor="@color/white"
+        android:layout_below="@id/uploadMootProblem"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="20dp"
+        android:layout_height="40dp"
+        android:id="@+id/uploadRulesBtn"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_upload"
+        android:layout_above="@id/uploadMootProblem"
+        android:layout_toLeftOf="@id/uploadRulesTxt"
+        android:layout_alignTop="@id/uploadRulesTxt"
+        android:background="@android:color/transparent"/>
+
+    <ImageButton
+        android:layout_width="20dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageButton"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_upload"
+        android:layout_toLeftOf="@id/uploadMootProblem"
+        android:layout_alignTop="@id/uploadMootProblem"
+        android:background="@android:color/transparent"
+        android:layout_alignBottom="@+id/uploadMootProblem" />
+
+</RelativeLayout>
+</RelativeLayout>

@@ -18,7 +18,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "android_api";
@@ -33,6 +33,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_CONTACT = "contact";
     private static final String KEY_COLLEGE = "college";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_ISADMIN = "isadmin";
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
 
@@ -46,7 +47,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_LOGIN + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_FNAME+ " TEXT,"
                 + KEY_LNAME+ " TEXT," + KEY_CONTACT+ " TEXT," + KEY_COLLEGE+ " TEXT,"
-                + KEY_EMAIL + " TEXT UNIQUE," + KEY_UID + " TEXT,"
+                + KEY_EMAIL + " TEXT UNIQUE," + KEY_ISADMIN + " INTEGER ,"+ KEY_UID + " TEXT,"
                 + KEY_CREATED_AT + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
@@ -66,15 +67,16 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUser(String fname, String lname, String contact, String college, String email, String uid, String created_at) {
+    public void addUser(String fname, String lname, String contact, String college, String email, int isadmin, String uid, String created_at) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_FNAME, fname); // First Name
         values.put(KEY_LNAME, lname); // Last Name
         values.put(KEY_CONTACT, contact); // Contact
-        values.put(KEY_CONTACT, college); //College
+        values.put(KEY_COLLEGE, college); //College
         values.put(KEY_EMAIL, email); // Email
+        values.put(KEY_ISADMIN,isadmin); // Whether user is admin or not
         values.put(KEY_UID, uid); // Unique ID
         values.put(KEY_CREATED_AT, created_at); // Created At
 
@@ -88,8 +90,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Getting user data from database
      * */
-    public HashMap<String, String> getUserDetails() {
-        HashMap<String, String> user = new HashMap<String, String>();
+    public HashMap<String, Object> getUserDetails() {
+        HashMap<String, Object> user = new HashMap<String, Object>();
         String selectQuery = "SELECT  * FROM " + TABLE_LOGIN;
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -102,8 +104,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("contact", cursor.getString(3));
             user.put("college", cursor.getString(4));
             user.put("email", cursor.getString(5));
-            user.put("uid", cursor.getString(6));
-            user.put("created_at", cursor.getString(7));
+            user.put("isadmin", cursor.getInt(6));
+            user.put("uid", cursor.getString(7));
+            user.put("created_at", cursor.getString(8));
         }
         cursor.close();
         db.close();

@@ -2,14 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_register_admin">
+    android:background="@color/mootster_green_material_500"
+    >
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.example.ha294221.mootster.RegisterAdminActivity"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="20dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="20dp"
     android:isScrollContainer="true"
     >
 
@@ -20,48 +24,52 @@
         android:inputType="textPersonName"
         android:hint="@string/hint_fname"
         android:id="@+id/fnameAdmin"
-        android:background="@color/input_register_admin_bg"
         android:padding="10dp"
         android:layout_alignParentTop="true"
-         />
+        android:background="@color/white"
+        />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:background="@color/input_register_admin_bg"
         android:id="@+id/lnameAdmin"
         android:layout_below="@+id/fnameAdmin"
         android:layout_marginTop="10dp"
         android:padding="10dp"
+        android:background="@color/white"
         android:hint="@string/hint_lname" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
-        android:background="@color/input_register_admin_bg"
         android:id="@+id/contactAdmin"
         android:layout_below="@+id/lnameAdmin"
         android:layout_marginTop="10dp"
         android:padding="10dp"
-        android:hint="@string/hint_contact" />
+        android:background="@color/white"
+        android:hint="@string/hint_contact"
+        />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/dobAdmin"
-        android:background="@color/input_register_admin_bg"
+        android:inputType="none"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_below="@+id/contactAdmin"
-        android:hint="@string/hint_dob" />
+        android:background="@color/white"
+        android:hint="@string/hint_dob"
+       />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/calendarDob"
         android:src="@mipmap/ic_calendar"
+        android:background="@android:color/transparent"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/dobAdmin"
@@ -71,65 +79,70 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/input_register_admin_bg"
         android:id="@+id/collegeAdmin"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_below="@+id/dobAdmin"
-        android:hint="@string/hint_college" />
+        android:background="@color/white"
+        android:hint="@string/hint_college"
+        />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:background="@color/input_register_admin_bg"
         android:id="@+id/facultyIncharge"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_below="@+id/collegeAdmin"
-        android:hint="@string/hint_fac_incharge" />
+        android:background="@color/white"
+        android:hint="@string/hint_fac_incharge"
+        />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:id="@+id/facultyContact"
-        android:background="@color/input_register_admin_bg"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_below="@+id/facultyIncharge"
-        android:hint="@string/hint_fac_contact"/>
+        android:background="@color/white"
+        android:hint="@string/hint_fac_contact"
+       />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:id="@+id/emailAdmin"
-        android:background="@color/input_register_admin_bg"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_below="@+id/facultyContact"
-        android:hint="@string/hint_email"/>
+        android:background="@color/white"
+        android:hint="@string/hint_email"
+        />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:background="@color/input_register_admin_bg"
         android:id="@+id/passwordAdmin"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_below="@+id/emailAdmin"
-        android:hint="@string/hint_password" />
+        android:background="@color/white"
+        android:hint="@string/hint_password"
+        />
 
     <Button
         android:id="@+id/btnRegisterAdmin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/btn_register_admin"
+        android:background="#ea4c88"
         android:text="@string/btn_register"
-        android:textColor="@color/white"
+        android:textColor="@android:color/black"
         android:layout_below="@+id/passwordAdmin" />
 
     <Button

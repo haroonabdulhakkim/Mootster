@@ -2,21 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_register"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:layout_gravity="center">
+    android:background="@color/mootster_green_material_500"
+    >
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center">
         <EditText
             android:id="@+id/fname"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/input_register_bg"
+            android:background="@color/white"
             android:hint="@string/hint_fname"
             android:padding="10dp"
             android:singleLine="true"
@@ -30,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_below="@+id/fname"
-            android:background="@color/input_register_bg"
+            android:background="@color/white"
             android:hint="@string/hint_lname"
             android:padding="10dp"
             android:singleLine="true"
@@ -44,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_below="@+id/lname"
-            android:background="@color/input_register_bg"
+            android:background="@color/white"
             android:hint="@string/hint_contact"
             android:padding="10dp"
             android:singleLine="true"
@@ -57,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:id="@+id/dobReg"
-        android:background="@color/input_register_bg"
+        android:background="@color/white"
         android:padding="10dp"
         android:singleLine="true"
         android:layout_below="@+id/contact"
@@ -70,6 +73,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/calendarDobReg"
         android:src="@mipmap/ic_calendar"
+        android:background="@android:color/transparent"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/dobReg"
@@ -82,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_below="@+id/dobReg"
-            android:background="@color/input_register_bg"
+            android:background="@color/white"
             android:hint="@string/hint_college"
             android:padding="10dp"
             android:singleLine="true"
@@ -96,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_below="@+id/college"
-            android:background="@color/input_register_bg"
+            android:background="@color/white"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
@@ -110,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_below="@+id/email"
-            android:background="@color/input_register_bg"
+            android:background="@color/white"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:padding="10dp"
@@ -143,5 +147,5 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp" />
+    </RelativeLayout>
 </RelativeLayout>
-

@@ -1,34 +1,41 @@
 package com.example.ha294221.mootster;
 
-import java.util.ArrayList;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.os.Build;
+
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.ha294221.mootster.adapter.NavDrawerListAdapter;
+import com.example.ha294221.mootster.helper.SQLiteHandler;
+import com.example.ha294221.mootster.helper.SessionManager;
 import com.example.ha294221.mootster.model.NavDrawerItem;
 
-public class MainActivity extends Activity {
+import java.util.ArrayList;
+
+
+public class AdminMainActivity extends AppCompatActivity {
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
+    private Toolbar tbar;
     // nav drawer title
     private CharSequence mDrawerTitle;
 
@@ -42,24 +49,39 @@ public class MainActivity extends Activity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
+    private SQLiteHandler db;
+    private SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        //   getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_admin_main);
+
+        //Setting status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.color_secondary));
+        }
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+
+        // session manager
+        session = new SessionManager(getApplicationContext());
 
         mTitle = mDrawerTitle = getTitle();
 
         // load slide menu items
-        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        navMenuTitles = getResources().getStringArray(R.array.nav_admin_drawer_items);
 
         // nav drawer icons from resources
         navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);
+                .obtainTypedArray(R.array.nav_admin_drawer_icons);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.admin_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.list_admin_slidermenu);
 
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
@@ -70,6 +92,10 @@ public class MainActivity extends Activity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
         // Communities, Will add a counter here
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "22"));
+        // Edit Profile Button
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        // Logout Button
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 
 
         // Recycle the typed array
@@ -81,29 +107,31 @@ public class MainActivity extends Activity {
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
         mDrawerList.setAdapter(adapter);
-
+        tbar= (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(tbar);
         // enabling action bar app icon and behaving it as toggle button
-        android.app.ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        //android.app.ActionBar actionBar = getSupportActionBar();
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.mipmap.ic_drawer, //nav menu toggle icon
+                tbar, //nav menu toggle icon
                 R.string.app_name, // nav drawer open - description for accessibility
                 R.string.app_name // nav drawer close - description for accessibility
         ) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                tbar.setTitle(mTitle);
                 // calling onPrepareOptionsMenu() to show action bar icons
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                tbar.setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
         };
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
@@ -165,22 +193,28 @@ public class MainActivity extends Activity {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new HomeFragment();
+                fragment = new CreateMootFragment();
                 break;
             case 1:
-                fragment = new FindPeopleFragment();
+                fragment = new AdminDashFragment();
                 break;
             case 2:
-                fragment = new CommunityFragment();
+                fragment = new ConnectionsFragment();
+                break;
+            case 3:
+                fragment = new EditProfileAdminFragment();
+                break;
+            case 4:
+                logoutUser();
                 break;
             default:
                 break;
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_admin_container, fragment).commit();
 
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
@@ -189,14 +223,14 @@ public class MainActivity extends Activity {
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
+            Log.e("AdminMainActivity", "Error in creating fragment");
         }
     }
 
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        tbar.setTitle(mTitle);
     }
 
     /**
@@ -218,4 +252,14 @@ public class MainActivity extends Activity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(AdminMainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

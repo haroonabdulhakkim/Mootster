@@ -3,9 +3,10 @@ package com.example.ha294221.mootster;
 /**
  * Created by HA294221 on 8/29/2015.
  */
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,11 +50,10 @@ public class HomeFragment extends Fragment {
         }
 
         // Fetching user details from sqlite
-        HashMap<String, String> user = db.getUserDetails();
-        Toast.makeText(getActivity().getApplicationContext(), user.toString() + "!!!", Toast.LENGTH_LONG).show();
-        String fname = user.get("fname");
-        String email = user.get("email");
-        Toast.makeText(getActivity().getApplicationContext(), fname + "!!!", Toast.LENGTH_LONG).show();
+        HashMap<String, Object> user = db.getUserDetails();
+        String fname = (String) user.get("fname");
+        String email = (String) user.get("email");
+
         // Displaying the user details on the screen
         txtFirstName.setText(fname);
         txtEmail.setText(email);

@@ -1,13 +1,15 @@
 package com.example.ha294221.mootster;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,28 +17,22 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.ha294221.mootster.app.AppConfig;
 import com.example.ha294221.mootster.app.AppController;
 import com.example.ha294221.mootster.helper.JSONParser;
 import com.example.ha294221.mootster.helper.SQLiteHandler;
 import com.example.ha294221.mootster.helper.SessionManager;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Created by HA294221 on 8/8/2015.
  */
-public class LoginActivity extends Activity{
+public class LoginActivity extends AppCompatActivity{
     // LogCat tag
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final String MY_PREFS_NAME = "LoginCredentials";
@@ -56,6 +52,13 @@ public class LoginActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Setting status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.color_secondary));
+        }
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -79,11 +82,23 @@ public class LoginActivity extends Activity{
         session = new SessionManager(getApplicationContext());
         db = new SQLiteHandler(getApplicationContext());
         // Check if user is already logged in or not
+        session.setLogin(true);
+
+        db.addUser("Haroon", "H", "8089574308", "IIT M", "har1@gmail.com", 1, "001", "27/09/2015");
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            HashMap<String, Object> user = db.getUserDetails();
+            Boolean isadmin = (user.get("isadmin")==1);
+            if(isadmin){
+                Intent intent = new Intent(LoginActivity.this,
+                        AdminMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(LoginActivity.this, UserMainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         // Login button Click Event
@@ -138,51 +153,73 @@ public class LoginActivity extends Activity{
         pDialog.setMessage("Logging in ...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_REGISTER, new Response.Listener<String>() {
+
+        JSONObject reqJson = new JSONObject();
+        try {
+            reqJson.put("tag", "login");
+            reqJson.put("email", email);
+            reqJson.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "Request Json: " + reqJson.toString());
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
+                AppConfig.URL_LOGIN, reqJson, new Response.Listener<JSONObject>() {
+
 
             @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "Login Response: " + response.toString());
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, "Login Response: " + response);
                 hideDialog();
 
                 try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
 
+
+                    boolean error = response.getBoolean("error");
                     // Check for error node in json
                     if (!error) {
                         // user successfully logged in
                         // Create login session
                         session.setLogin(true);
-                        String uid = jObj.getString("uid");
-                        JSONObject user = jObj.getJSONObject("user");
+                        String uid = response.getString("uid");
+                        JSONObject user = response.getJSONObject("user");
                         String fname = user.getString("fname");
                         String lname = user.getString("lname");
                         String contact = user.getString("contact");
                         String college = user.getString("college");
                         String email = user.getString("email");
+                        Boolean isadmin = "1".equals(user.getString("isadmin"));
                         String created_at = user.getString("created_at");
-                        db.addUser(fname, lname, contact, college, email, uid, created_at);
+
+                        int role= (isadmin)?1:0; // 1 - Admin , 0 - user
+                        db.addUser(fname, lname, contact, college, email, role, uid, created_at);
                         // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        if(isadmin){
+                            Intent intent = new Intent(LoginActivity.this,
+                                    AdminMainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent = new Intent(LoginActivity.this,
+                                    UserMainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     } else {
                         // Error in login. Get the error message
-                        String errorMsg = jObj.getString("error_msg");
+                        String errorMsg = response.getString("error_msg");
                         Toast.makeText(getApplicationContext(),
                                 errorMsg, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
-                    // JSON error
+                    Log.e(TAG,Log.getStackTraceString(e));
                     e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                 }
 
             }
-        }, new Response.ErrorListener() {
 
+        }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Login Error: " + error.getMessage());
@@ -190,23 +227,12 @@ public class LoginActivity extends Activity{
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
             }
-        }) {
 
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting parameters to login url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("tag", "login");
-                params.put("email", email);
-                params.put("password", password);
+        });
 
-                return params;
-            }
-
-        };
-
+        Log.d(TAG, "JSON request: " + req.toString());
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        AppController.getInstance().addToRequestQueue(req, tag_string_req);
     }
 
     private void showDialog() {

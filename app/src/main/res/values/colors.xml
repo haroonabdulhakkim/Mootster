@@ -21,9 +21,15 @@
     <color name="list_item_title">#fff</color>
     <color name="counter_text_color">#c5c4c4</color>
     <color name="bg_user_role">#00FFFF</color>
-    <color name="bg_role_btn">#1fb4da</color>
+    <color name="bg_role_btn">#CCFF90</color>
     <color name="bg_register_admin">#f2ff00</color>
     <color name="input_register_admin_bg">#FFFF66</color>
     <color name="btn_register_admin">#B19200</color>
+    <color name="create_moot_btn">#0033FF</color>
 
+    <color name="mootster_green_material_500">#2ecc71</color>
+    <color name="primary_dark">#689F38</color>
+    <color name="color_primary">#2ecc71</color>
+    <color name="color_secondary">#33691E</color>
+    <color name="color_accent">#B2FF59</color>
 </resources>

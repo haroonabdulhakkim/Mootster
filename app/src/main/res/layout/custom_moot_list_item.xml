@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="10dp">
+    <ImageView
+        android:id="@+id/item_letter"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="4dp"/>
+    <TextView
+        android:id="@+id/moot_date_in_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="Date of Moot"
+        android:textSize="12sp"
+        android:layout_alignRight="@+id/moot_title_in_list"
+        android:layout_alignEnd="@+id/moot_title_in_list"
+        android:layout_below="@+id/moot_title_in_list"
+        android:layout_toRightOf="@+id/item_letter"
+        android:layout_toEndOf="@+id/item_letter"
+        android:padding="4dp"/>
+
+    <TextView
+        android:id="@+id/moot_title_in_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/item_letter"
+        android:text="Moot Title"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:padding="4dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/collapsible_moot_options"
+        android:layout_alignLeft="@+id/moot_date_in_list"
+        android:layout_alignStart="@+id/moot_date_in_list"
+        android:layout_below="@+id/moot_date_in_list">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/venue"
+            android:textSize="12sp"
+            android:layout_alignParentLeft="true"
+            android:textColor="@android:color/black"
+            android:padding="4dp"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/imageButton2"
+            android:layout_toLeftOf="@+id/imageView"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignTop="@+id/imageView"
+            android:src="@mipmap/ic_edit"
+            />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ic_delete"
+            android:id="@+id/imageView"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>
