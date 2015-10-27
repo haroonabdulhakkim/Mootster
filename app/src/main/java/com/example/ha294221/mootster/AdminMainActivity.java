@@ -56,7 +56,6 @@ public class AdminMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //   getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-
         setContentView(R.layout.activity_admin_main);
 
         //Setting status bar color
@@ -107,7 +106,7 @@ public class AdminMainActivity extends AppCompatActivity {
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
         mDrawerList.setAdapter(adapter);
-        tbar= (Toolbar) findViewById(R.id.toolbar);
+        tbar= (Toolbar) findViewById(R.id.toolbar1);
         //setSupportActionBar(tbar);
         // enabling action bar app icon and behaving it as toggle button
         //android.app.ActionBar actionBar = getSupportActionBar();

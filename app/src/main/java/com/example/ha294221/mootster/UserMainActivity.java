@@ -102,7 +102,7 @@ public class UserMainActivity extends AppCompatActivity {
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
         mDrawerList.setAdapter(adapter);
-        tbar= (Toolbar) findViewById(R.id.toolbar);
+        tbar= (Toolbar) findViewById(R.id.toolbar2);
         // enabling action bar app icon and behaving it as toggle button
        /* android.app.ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
