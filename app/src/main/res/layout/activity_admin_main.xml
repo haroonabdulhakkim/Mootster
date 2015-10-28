@@ -16,7 +16,6 @@
     </FrameLayout>
 
 
-
     <!-- Listview to display slider menu -->
     <ListView
         android:id="@+id/list_admin_slidermenu"

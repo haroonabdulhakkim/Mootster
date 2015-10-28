@@ -45,7 +45,7 @@ public class EditProfileAdminFragment extends Fragment {
         Log.e("Inside onStart", "onStart");
     }
 
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
