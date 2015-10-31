@@ -94,7 +94,7 @@ public class MootListAdminAdapter extends RecyclerView.Adapter<MootListAdminAdap
         return mootList.size();
     }
 
-    static class MootListViewHolder extends RecyclerView.ViewHolder{
+    public class MootListViewHolder extends RecyclerView.ViewHolder{
         private ImageView itemLetter;
         private TextView mootDateInList;
         private TextView mootTitleInList;
@@ -110,4 +110,6 @@ public class MootListAdminAdapter extends RecyclerView.Adapter<MootListAdminAdap
             venue=(TextView)itemView.findViewById(R.id.venue);
         }
     }
+
+
 }
