@@ -105,4 +105,8 @@
     <string name="create_moot">Create Moot</string>
     <string name="upload_rules"><![CDATA[Upload Rules & Regulations]]></string>
     <string name="upload_moot_pblm">Upload Moot Problem</string>
+
+    <!-- Fragment Name -->
+    <string name="fragment_connections">Connections</string>
+    <string name="title_fragment_admin_dash">List of Moots</string>
 </resources>

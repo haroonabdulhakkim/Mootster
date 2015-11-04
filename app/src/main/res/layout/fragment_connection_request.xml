@@ -1,11 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.ha294221.mootster.fragments.ConnectionRequestFragment">
-
-    <android.support.v7.widget.RecyclerView
+<android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        tools:context="com.example.ha294221.mootster.fragments.ConnectionRequestFragment"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/connect_req_list_admin"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
-
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+    />

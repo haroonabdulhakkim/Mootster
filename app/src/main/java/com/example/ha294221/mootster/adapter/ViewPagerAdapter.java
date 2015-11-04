@@ -9,6 +9,7 @@ import com.example.ha294221.mootster.CreateMootFragment;
 import com.example.ha294221.mootster.EditProfileAdminFragment;
 import com.example.ha294221.mootster.FindPeopleFragment;
 import com.example.ha294221.mootster.HomeFragment;
+import com.example.ha294221.mootster.fragments.ConnectedFragment;
 import com.example.ha294221.mootster.fragments.ConnectionRequestFragment;
 
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
-            case 0:return "Requests";
-            case 1:return "Connected";
+            /*case 0:return "Requests";
+            case 1:return "Connected";*/
         }
         return null;
     }
@@ -37,7 +38,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:return new ConnectionRequestFragment();
-            case 1:return new FindPeopleFragment();
+            case 1:return new ConnectedFragment();
         }
         return null;
     }

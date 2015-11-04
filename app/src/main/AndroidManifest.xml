@@ -45,7 +45,9 @@
         </activity>
         <activity
             android:name=".AdminMainActivity"
-            android:label="@string/title_activity_admin_main" >
+            android:label="@string/title_activity_admin_main"
+            android:launchMode="singleTop"
+            >
         </activity>
     </application>
 

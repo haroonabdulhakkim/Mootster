@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/connected_admin_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/ic_default_prof_pic"
+        android:layout_alignParentLeft="true"
+        android:padding="4dp"/>
+    <TextView
+        android:id="@+id/connected_name_admin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/connected_admin_img"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:padding="4dp"/>
+    <TextView
+        android:id="@+id/college_conn_list_admin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textSize="12sp"
+        android:layout_below="@+id/connected_name_admin"
+        android:layout_toRightOf="@+id/connected_admin_img"
+        android:layout_toEndOf="@+id/connected_admin_img"
+        android:padding="4dp"/>
+
+</RelativeLayout>

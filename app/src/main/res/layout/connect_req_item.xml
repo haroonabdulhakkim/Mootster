@@ -2,33 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@color/background_material_light">
+    <ImageView
+        android:id="@+id/conn_req__first_letter"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:padding="4dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/name_connect_req_admin"
         android:padding="4dp"
         android:textSize="16sp"
-        android:layout_alignParentLeft="true"/>
+        android:layout_toRightOf="@id/conn_req__first_letter" />
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@mipmap/ic_decline"
         android:id="@+id/decline_req_admin"
         android:layout_toLeftOf="@+id/accept_req_admin"
+        android:layout_alignTop="@+id/conn_req__first_letter"
+        android:layout_alignBottom="@+id/conn_req__first_letter"
         android:clickable="true"
-        android:padding="4dp"
-        android:layout_alignTop="@+id/name_connect_req_admin"
-        android:layout_alignBottom="@+id/name_connect_req_admin" />
+         />
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@mipmap/ic_accept"
         android:id="@+id/accept_req_admin"
         android:layout_alignParentRight="true"
-        android:padding="4dp"
-        android:layout_alignTop="@+id/name_connect_req_admin"
-        android:layout_alignBottom="@+id/decline_req_admin" />
+        android:layout_alignTop="@+id/conn_req__first_letter"
+         />
 
 
 </RelativeLayout>

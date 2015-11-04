@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ha294221.mootster.adapter.ViewPagerAdapter;
 
@@ -23,8 +24,7 @@ public class ConnectionsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
+        getActivity().setTitle(R.string.fragment_connections);
     }
 
 
@@ -38,16 +38,24 @@ public class ConnectionsFragment extends Fragment {
 
         tabLayout = (TabLayout) rootView.findViewById(R.id.connection_tab);
         tabLayout.setupWithViewPager(viewPager);
+        setUpTabView();
         return rootView;
     }
 
+    // Setting Custom Tab Views
+    private void setUpTabView() {
+        View v = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab_connections,null);
+        TextView title=(TextView)v.findViewById(R.id.tab_title);
+        title.setText("REQUESTS");
+        tabLayout.getTabAt(0).setCustomView(v);
+        tabLayout.getTabAt(1).setText("CONNECTED");
+    }
 
+    // Setting up ViewPager with FragmentPagerAdapter
     private ViewPager setUpViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        Log.e("Adapter", adapter.toString());
         viewPager.setAdapter(adapter);
         return viewPager;
-
     }
 }
 

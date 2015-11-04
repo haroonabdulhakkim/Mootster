@@ -32,4 +32,6 @@
     <color name="color_primary">#2ecc71</color>
     <color name="color_secondary">#33691E</color>
     <color name="color_accent">#B2FF59</color>
+    <color name="tab_selected">#fff</color>
+    <color name="tab_unselected">#B3FFFFFF</color>
 </resources>

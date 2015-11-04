@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/tab_label"
+        android:fontFamily="@string/font_fontFamily_medium"
+        android:id="@+id/tab_title"
+        android:textColor="@color/custom_tab_color"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_primary"
+        android:textSize="12sp"
+        android:fontFamily="@string/font_fontFamily_medium"
+        android:textStyle="bold"
+        android:id="@+id/tab_count"
+        android:background="@drawable/badge_circle"
+        android:layout_toRightOf="@id/tab_title"
+        android:layout_alignBottom="@id/tab_title"
+        android:layout_marginLeft="4dp"/>
+
+</RelativeLayout>

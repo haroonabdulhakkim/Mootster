@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -19,29 +18,31 @@ import com.example.ha294221.mootster.util.Fx;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.CheckedOutputStream;
 
 /**
- * Created by HA294221 on 10/14/2015.
+  * Created by Haroon on 10/14/2015.
  */
 public class MootListAdminAdapter extends RecyclerView.Adapter<MootListAdminAdapter.MootListViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private ViewGroup parentRecyclerView;
+    private RecyclerView parentRecyclerView;
     private List<MootListItem> mootList= Collections.EMPTY_LIST;
-    private int currentPos=-1;
+    private int expandedPos;
     private Context ctx;
-    public MootListAdminAdapter(Context context,List<MootListItem> data) {
+
+    public MootListAdminAdapter(Context context,List<MootListItem> data,int pos) {
         layoutInflater=LayoutInflater.from(context);
         mootList=data;
         ctx=context;
+        expandedPos=pos;
     }
 
     @Override
     public MootListViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        Log.e("onCreateViewHolder", String.valueOf(i));
         View view=layoutInflater.inflate(R.layout.custom_moot_list_item,viewGroup,false);
         MootListViewHolder viewHolder=new MootListViewHolder(view);
-        parentRecyclerView=viewGroup;
+        parentRecyclerView=(RecyclerView)viewGroup;
         return viewHolder;
     }
 
@@ -49,44 +50,25 @@ public class MootListAdminAdapter extends RecyclerView.Adapter<MootListAdminAdap
     @Override
     public void onBindViewHolder(final MootListViewHolder mootListViewHolder, final int i) {
         ColorGenerator generator = ColorGenerator.MATERIAL;
+        Log.e("onBindViewHolder",String.valueOf(i));
 
+        // Setting data from passed list to the ViewHolder elements
         mootListViewHolder.mootDateInList.setText(mootList.get(i).getMootDate());
         mootListViewHolder.mootTitleInList.setText(mootList.get(i).getMootTitle());
         mootListViewHolder.venue.setText(mootList.get(i).getVenue());
-        String letter = String.valueOf(mootListViewHolder.mootTitleInList.getText().charAt(0));
+
+        // Rounded First Letter
+        final String letter = String.valueOf(mootListViewHolder.mootTitleInList.getText().charAt(0));
         TextDrawable drawable = TextDrawable.builder().buildRound(letter, generator.getRandomColor());
         mootListViewHolder.itemLetter.setImageDrawable(drawable);
-        if(mootList.get(i).isExpanded()) {
+
+        // Handling orientation changes (Setting the visibility if already in clicked state, on changing orientation)
+        if(mootListViewHolder.getAdapterPosition()==expandedPos){
             mootListViewHolder.collapsibleMootOptions.setVisibility(View.VISIBLE);
         }else {
             mootListViewHolder.collapsibleMootOptions.setVisibility(View.GONE);
         }
-        mootListViewHolder.mootTitleInList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*View last;
-                if (currentPos != -1) {
 
-                    last = parentRecyclerView.getChildAt(currentPos);
-
-                    if(null!=last) {
-                        last.findViewById(R.id.collapsible_moot_options).setVisibility(View.GONE);
-                    }
-
-                }else{
-                }*/
-                if(mootListViewHolder.collapsibleMootOptions.isShown()){
-                    Fx.slide_up(ctx,mootListViewHolder.collapsibleMootOptions);
-                    mootListViewHolder.collapsibleMootOptions.setVisibility(View.GONE);
-                    mootList.get(i).setExpanded(false);
-                }else{
-                    mootListViewHolder.collapsibleMootOptions.setVisibility(View.VISIBLE);
-                    Fx.slide_down(ctx, mootListViewHolder.collapsibleMootOptions);
-                    mootList.get(i).setExpanded(true);
-                }
-                currentPos = i;
-            }
-        });
     }
 
     @Override
@@ -94,7 +76,12 @@ public class MootListAdminAdapter extends RecyclerView.Adapter<MootListAdminAdap
         return mootList.size();
     }
 
-    public class MootListViewHolder extends RecyclerView.ViewHolder{
+    public int getExpandedPos() {
+        return expandedPos;
+    }
+
+
+    public class MootListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView itemLetter;
         private TextView mootDateInList;
         private TextView mootTitleInList;
@@ -108,6 +95,50 @@ public class MootListAdminAdapter extends RecyclerView.Adapter<MootListAdminAdap
             mootTitleInList=(TextView)itemView.findViewById(R.id.moot_title_in_list);
             collapsibleMootOptions=(RelativeLayout)itemView.findViewById(R.id.collapsible_moot_options);
             venue=(TextView)itemView.findViewById(R.id.venue);
+
+            mootTitleInList.setOnClickListener(this);
+            mootDateInList.setOnClickListener(this);
+            collapsibleMootOptions.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            // Toggle the views such that only one view is expanded at a time
+
+            MootListViewHolder last;
+            if (expandedPos != -1) {
+                last= (MootListViewHolder) parentRecyclerView.findViewHolderForAdapterPosition(expandedPos);
+
+                if(null!=last) {
+                    if (collapsibleMootOptions.isShown()) {
+                        Fx.slide_up(ctx, collapsibleMootOptions);
+                        collapsibleMootOptions.setVisibility(View.GONE);
+                        expandedPos = -1;
+                    } else {
+                        if( last.collapsibleMootOptions.isShown()) {
+                            Fx.slide_up(ctx, last.collapsibleMootOptions);
+                            last.collapsibleMootOptions.setVisibility(View.GONE);
+                        }
+                        collapsibleMootOptions.setVisibility(View.VISIBLE);
+                        Fx.slide_down(ctx, collapsibleMootOptions);
+                        expandedPos = getAdapterPosition();
+                    }
+                }else{
+                    if(!collapsibleMootOptions.isShown()) {
+                        collapsibleMootOptions.setVisibility(View.VISIBLE);
+                        Fx.slide_down(ctx, collapsibleMootOptions);
+                        expandedPos = getAdapterPosition();
+                    }
+                }
+            }
+            else{
+                if(!collapsibleMootOptions.isShown()) {
+                    collapsibleMootOptions.setVisibility(View.VISIBLE);
+                    Fx.slide_down(ctx, collapsibleMootOptions);
+                    expandedPos = getAdapterPosition();
+                }
+            }
         }
     }
 

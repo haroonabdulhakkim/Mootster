@@ -7,7 +7,6 @@ public class MootListItem {
     private String mootTitle;
     private String mootDate;
     private String venue;
-    private boolean expanded;
 
     public String getMootTitle() {
         return mootTitle;
@@ -33,11 +32,4 @@ public class MootListItem {
         this.venue = venue;
     }
 
-    public boolean isExpanded() {
-        return expanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        this.expanded = expanded;
-    }
 }

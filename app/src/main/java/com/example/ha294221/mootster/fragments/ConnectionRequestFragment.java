@@ -2,6 +2,7 @@ package com.example.ha294221.mootster.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.ha294221.mootster.R;
 import com.example.ha294221.mootster.adapter.ConnectionReqAdminAdapter;
 import com.example.ha294221.mootster.model.ConnectRequestAdminItem;
+import com.example.ha294221.mootster.util.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +34,13 @@ public class ConnectionRequestFragment extends Fragment {
         connectReqListAdmin.setLayoutManager(new LinearLayoutManager(getActivity()));
         connectionReqAdminAdapter = new ConnectionReqAdminAdapter(getActivity(),getConnReqList());
         connectReqListAdmin.setAdapter(connectionReqAdminAdapter);
+        connectReqListAdmin.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         return rootView;
     }
 
     private List<ConnectRequestAdminItem> getConnReqList() {
         List<ConnectRequestAdminItem> connReqListItems=new ArrayList<>();
-        String[] names={"Haroon Abdul Hakkim"," Shyam Pillai","Ram Pillai", "Naveed Abdul","Sachin Tendulkar"," M S Dhoni","Sourav Ganguly", "Roger Federer","Rossi","Sania Mirza"};
+        String[] names={"Haroon Abdul Hakkim","Shyam Pillai","Ram Pillai", "Naveed Abdul","Sachin Tendulkar","M S Dhoni","Sourav Ganguly", "Roger Federer","Rossi","Sania Mirza","The Rock","Tyrion Lannister","Khal Drogo"};//
         for(int i=0;i <names.length; i++){
             ConnectRequestAdminItem item=new ConnectRequestAdminItem();
             item.setName(names[i]);

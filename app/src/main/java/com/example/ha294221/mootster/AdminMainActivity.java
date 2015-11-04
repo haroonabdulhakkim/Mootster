@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.ha294221.mootster.adapter.NavDrawerListAdapter;
+import com.example.ha294221.mootster.fragments.ConnectionRequestFragment;
 import com.example.ha294221.mootster.helper.SQLiteHandler;
 import com.example.ha294221.mootster.helper.SessionManager;
 import com.example.ha294221.mootster.model.NavDrawerItem;
@@ -242,6 +243,12 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("onDestroy","inside Activity");
     }
 
     @Override

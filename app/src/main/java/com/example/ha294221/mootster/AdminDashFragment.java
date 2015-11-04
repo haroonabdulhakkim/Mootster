@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ha294221.mootster.adapter.MootListAdminAdapter;
 import com.example.ha294221.mootster.model.MootListItem;
+import com.example.ha294221.mootster.util.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,30 +24,51 @@ public class AdminDashFragment extends Fragment {
     private FloatingActionButton addMootFab;
     private RecyclerView listMootsAdmin;
     private MootListAdminAdapter mootListAdminAdapter;
-
+    private List<MootListItem> mootList;
 
 
     public AdminDashFragment() {
-        // Required empty public constructor
+        // Fetching the list of moots
+        // Have to figure out if this is the right place to make the json call
+        mootList=getMootList();
     }
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-           }
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        int expPos=-1;
+        // Retrieving the position of the expanded item((if any, otherwise -1)) from the bundle
+        if(null!=savedInstanceState){
+            expPos=savedInstanceState.getInt("ExpandedPos");
+        }
+        listMootsAdmin.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mootListAdminAdapter= new MootListAdminAdapter(getActivity(),mootList,expPos);
+        listMootsAdmin.setAdapter(mootListAdminAdapter);
+        listMootsAdmin.addItemDecoration(new DividerItemDecoration(getActivity(), null));
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Saving the position of the expanded item (if any, otherwise -1) in the bundle to handle orientation change
+        outState.putInt("ExpandedPos", mootListAdminAdapter.getExpandedPos());
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Setting the title of the fragment
+        getActivity().setTitle(R.string.title_fragment_admin_dash);
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_admin_dash, container, false);
         addMootFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         listMootsAdmin = (RecyclerView) rootView.findViewById(R.id.mootListAdmin);
-        listMootsAdmin.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mootListAdminAdapter= new MootListAdminAdapter(getActivity(),getMootList());
-        listMootsAdmin.setAdapter(mootListAdminAdapter);
-        setRetainInstance(true);
+
+        // onClick(), redirects to create moot fragment
         addMootFab.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -75,7 +98,6 @@ public class AdminDashFragment extends Fragment {
             item.setMootTitle(titles[i]);
             item.setMootDate(dates[i]);
             item.setVenue(venues[i]);
-            item.setExpanded(false);
             mootListItems.add(item);
         }
        return mootListItems;
